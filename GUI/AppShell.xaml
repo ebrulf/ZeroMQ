@@ -8,7 +8,7 @@
     Title="GUI">
 
     <ShellContent
-        Title="Home"
+        Title="Strona domowa"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
