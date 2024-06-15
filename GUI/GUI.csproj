@@ -62,6 +62,7 @@
 	  <None Remove="Resources\Images\icon_about_ios.png" />
 	  <None Remove="Resources\Images\icon_notes.png" />
 	  <None Remove="Resources\Images\icon_notes_ios.png" />
+	  <None Remove="Resources\Images\tic_tac_toe.png" />
 	</ItemGroup>
 
 	<ItemGroup>
