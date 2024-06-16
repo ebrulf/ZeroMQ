@@ -5,10 +5,10 @@
              Title="OApce">
     <VerticalStackLayout Spacing="10" Margin="10">
         <HorizontalStackLayout Spacing="10">
-            <Image Source="tic_tac_toe.png"
+            <Image Source="dotnet_bot.png"
                    SemanticProperties.Description="Logo kółka i krzyżyk od Wikimedysty KN1338!"
                    HeightRequest="64" />
-            <Label FontSize="22" FontAttributes="Bold" Text="Kółko i krzyżyk" VerticalOptions="End" />
+            <Label FontSize="22" FontAttributes="Bold" Text="Odtwarzacz" VerticalOptions="End" />
             <Label FontSize="22" Text="v0.0.1" VerticalOptions="End" />
         </HorizontalStackLayout>
 
