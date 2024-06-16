@@ -11,7 +11,7 @@ namespace GUI
             builder
                 .UseMauiApp<App>()
                 //.UseMauiCommunityToolkit()
-                //.UseMauiCommunityToolkitMediaElement()
+                .UseMauiCommunityToolkitMediaElement()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
