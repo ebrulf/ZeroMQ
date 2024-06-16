@@ -1,11 +1,11 @@
-﻿
-
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.Storage;
 namespace GUI
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
-        //BasePage<>
         public MainPage()
         {
             InitializeComponent();
@@ -23,6 +23,37 @@ namespace GUI
 
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
+        private async void SelectSound(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = await FilePicker.Default.PickAsync(new PickOptions
+                {
+                    PickerTitle = "Wybierz plik dźwiękowy",
+                    //FileTypes = FilePickerFileType.Images
+                });
+                if (result != null)
+                {
+                    if (result.FileName.EndsWith("wav", StringComparison.OrdinalIgnoreCase) ||
+                        result.FileName.EndsWith("mp3", StringComparison.OrdinalIgnoreCase))
+                    {
+                        //using var stream = await result.OpenReadAsync();
+                        odtwarzacz.Stop();
+                        odtwarzacz.Source = MediaSource.FromFile(result.FileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Błąd", ex.Message, "OK");
+                throw;
+            }
+            // https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/file-picker?view=net-maui-8.0&tabs=windows
+            //var Sos = result.FullPath.ToString();
+            //odtwarzacz.Source = Sos;
+            //outputText.Text = imageSource;
+        }
+        //
     }
 
 }

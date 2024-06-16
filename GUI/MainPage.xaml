@@ -35,7 +35,17 @@
           
                 <!-- kopiuję stąd https://github.com/CommunityToolkit/Maui/blob/main/samples/CommunityToolkit.Maui.Sample/Pages/Views/MediaElement/MediaElementPage.xaml-->
             <!-- teraz stąd: https://github.com/carlfranklin/MauiMediaElement -->
-            <x:MediaElement Source="embed://FewDays.wav" />
+            <Label Text="Nazwa pliku dźwiękowego"  x:Name="outputText"
+                   Padding="10" Style="{StaticResource SubHeadline}"
+SemanticProperties.HeadingLevel="Level2"/>
+            <Button
+                x:Name="SoundSelect"
+                Text="Wybierz plik"
+                SemanticProperties.Hint="Wybierz plik"
+                Clicked="SelectSound"/>
+            <toolkit:MediaElement Source="embed://FewDays.wav" ShouldShowPlaybackControls="True" 
+                x:Name="odtwarzacz"
+                                  ShouldAutoPlay="False" />
          </VerticalStackLayout>
     </ScrollView>
 

@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui;
 namespace GUI;
 
 public partial class OApce : ContentPage
