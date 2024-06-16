@@ -1,12 +1,15 @@
-﻿namespace GUI
+﻿
+
+namespace GUI
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
-
+        //BasePage<>
         public MainPage()
         {
             InitializeComponent();
+
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
