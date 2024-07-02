@@ -79,9 +79,6 @@
 	  <None Remove="Resources\Images\icon_notes.png" />
 	  <None Remove="Resources\Images\icon_notes_ios.png" />
 	  <None Remove="Resources\Images\tic_tac_toe.png" />
-	  <None Remove="Resources\Raw\09 - Dupre - Symphony for Organ and Orchestra in G minor, Op. 25 - IV. Final - Anime.wav" />
-	  <None Remove="Resources\Raw\FewDays.wav" />
-	  <None Remove="Resources\Raw\もののけ姫、第四目.wav" />
 	</ItemGroup>
 
 	<ItemGroup>

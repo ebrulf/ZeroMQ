@@ -45,7 +45,7 @@ SemanticProperties.HeadingLevel="Level2"/>
                 Text="Wybierz plik"
                 SemanticProperties.Hint="Wybierz plik"
                 Clicked="SelectSound"/>
-            <toolkit:MediaElement Source="embed://FewDays.wav" ShouldShowPlaybackControls="True" 
+            <toolkit:MediaElement Source="" ShouldShowPlaybackControls="True" 
                 x:Name="odtwarzacz"
                                   ShouldAutoPlay="False" />
          </VerticalStackLayout>
