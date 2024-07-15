@@ -5,11 +5,11 @@
              Title="O apce">
     <VerticalStackLayout Spacing="10" Margin="10">
         <HorizontalStackLayout Spacing="10">
-            <Image Source="dotnet_bot.png"
+            <Image Source="tic_tac_toe.png"
                    SemanticProperties.Description="Logo kółka i krzyżyk od Wikimedysty KN1338!"
                    HeightRequest="64" />
             <Label FontSize="22" FontAttributes="Bold" Text="Odtwarzacz" VerticalOptions="End" />
-            <Label FontSize="22" Text="v0.0.1" VerticalOptions="End" />
+            <Label FontSize="22" Text="v0.0.2" VerticalOptions="End" />
         </HorizontalStackLayout>
 
         <Label Text="Niniejsza aplikacja została napisana w XAML i C# poprzez .NET MAUI." />

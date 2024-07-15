@@ -3,8 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="GUI.MainPage">
-    <!--  -->
-
+    <!-- też skopiowane z dev.to -->
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="LightGray" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+    </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
@@ -14,41 +23,28 @@
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="dot net bot w wyścigówce numer osiem" />
-
-            <!--<Label
-                Text="Witaj, świecie!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
-
-            <Label
-                Text="Witamy w &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Kliknij mnie" 
-                SemanticProperties.Hint="Liczy kliknięcia przycisku"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />-->
-          
-                <!-- kopiuję stąd https://github.com/CommunityToolkit/Maui/blob/main/samples/CommunityToolkit.Maui.Sample/Pages/Views/MediaElement/MediaElementPage.xaml-->
-            <!-- teraz stąd: https://github.com/carlfranklin/MauiMediaElement -->
-            <Label Text="Odtwarzacz muzyczny"  x:Name="LabelText"
-                   Padding="10" Style="{StaticResource Headline}"
+            <Label x:Name="Tytuł" Text="Gra" Style="{StaticResource Headline}"
+SemanticProperties.HeadingLevel="Level1"/>
+            <Label x:Name="Ruch" Text="Teraz kółka" Style="{StaticResource SubHeadline}"
 SemanticProperties.HeadingLevel="Level2"/>
-            <Label x:Name="outputText"
-                   Padding="10" />
-            <Button
-                x:Name="SoundSelect"
-                Text="Wybierz plik"
-                SemanticProperties.Hint="Wybierz plik"
-                Clicked="SelectSound"/>
-            <toolkit:MediaElement Source="" ShouldShowPlaybackControls="True" 
-                x:Name="odtwarzacz"
-                                  ShouldAutoPlay="False" />
-         </VerticalStackLayout>
+            <!-- skopiowane z: https://dev.to/vhugogarcia/net-maui-grid-layout-a-powerful-way-to-arrange-your-ui-elements-3pd3 -->
+            <ScrollView>
+                <Grid RowDefinitions="Auto,1*,1*,1*" ColumnDefinitions="1*,1*,1*">
+                    <!--<Label x:Name="ResultLabel" Text="0" FontSize="36" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" /> -->
+                    <Button Text="." Grid.Row="0" Grid.Column="0" />
+                    <Button Text="0" Grid.Row="0" Grid.Column="1" />
+                    <Button Text="=" Grid.Row="0" Grid.Column="2" />
+                    <Button Text="O" Grid.Row="1" Grid.Column="0" />
+                    <Button Text="8" Grid.Row="1" Grid.Column="1" />
+                    <Button Text="9" Grid.Row="1" Grid.Column="2" />
+                    
+                    <Button Text="4" Grid.Row="2" Grid.Column="0" />
+                    <Button Text="5" Grid.Row="2" Grid.Column="1" />
+                    <Button Text="6" Grid.Row="2" Grid.Column="2" />
+                   
+                </Grid>
+            </ScrollView>
+        </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>
