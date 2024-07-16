@@ -13,6 +13,12 @@ namespace GUI
 
         }
         //Shell.Current.DisplayAlert
+        void OnClicked(object sender, EventArgs args)
+        {
+            Console.Beep(220,500);
+            //sender.IsEnabledProperty = false;
+            ((Button)sender).IsEnabled = false; //to rozkracza plus zamienienie sendera z obiektu na przycisk
+        }
     }
     
 

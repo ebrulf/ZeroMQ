@@ -31,16 +31,16 @@ SemanticProperties.HeadingLevel="Level2"/>
             <ScrollView>
                 <Grid RowDefinitions="Auto,1*,1*,1*" ColumnDefinitions="1*,1*,1*">
                     <!--<Label x:Name="ResultLabel" Text="0" FontSize="36" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" /> -->
-                    <Button x:Name="0" Text="." Grid.Row="0" Grid.Column="0" />
-                    <Button Text="0" Grid.Row="0" Grid.Column="1" />
-                    <Button Text="=" Grid.Row="0" Grid.Column="2" />
-                    <Button Text="O" Grid.Row="1" Grid.Column="0" />
-                    <Button Text="8" Grid.Row="1" Grid.Column="1" />
-                    <Button Text="9" Grid.Row="1" Grid.Column="2" />
-                    
-                    <Button Text="4" Grid.Row="2" Grid.Column="0" />
-                    <Button Text="5" Grid.Row="2" Grid.Column="1" />
-                    <Button Text="6" Grid.Row="2" Grid.Column="2" />
+                    <Button x:Name="zero" Text="." Grid.Row="0" Grid.Column="0" Clicked="OnClicked"/>
+                    <Button Text="0" Grid.Row="0" Grid.Column="1" IsEnabled="False" Clicked="OnClicked"/>
+                    <Button Text="=" Grid.Row="0" Grid.Column="2" Clicked="OnClicked"/>
+                    <Button Text="O" Grid.Row="1" Grid.Column="0" Clicked="OnClicked"/>
+                    <Button Text="8" Grid.Row="1" Grid.Column="1" Clicked="OnClicked"/>
+                    <Button Text="9" Grid.Row="1" Grid.Column="2" IsEnabled="False" Clicked="OnClicked"/>
+
+                    <Button Text="4" Grid.Row="2" Grid.Column="0" IsEnabled="False" Clicked="OnClicked"/>
+                    <Button Text="5" Grid.Row="2" Grid.Column="1" Clicked="OnClicked"/>
+                    <Button Text="6" Grid.Row="2" Grid.Column="2" Clicked="OnClicked"/>
                    
                 </Grid>
             </ScrollView>
