@@ -31,7 +31,7 @@ SemanticProperties.HeadingLevel="Level2"/>
             <ScrollView>
                 <Grid RowDefinitions="Auto,1*,1*,1*" ColumnDefinitions="1*,1*,1*">
                     <!--<Label x:Name="ResultLabel" Text="0" FontSize="36" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" /> -->
-                    <Button Text="." Grid.Row="0" Grid.Column="0" />
+                    <Button x:Name="0" Text="." Grid.Row="0" Grid.Column="0" />
                     <Button Text="0" Grid.Row="0" Grid.Column="1" />
                     <Button Text="=" Grid.Row="0" Grid.Column="2" />
                     <Button Text="O" Grid.Row="1" Grid.Column="0" />

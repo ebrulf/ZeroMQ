@@ -21,4 +21,16 @@ static class Program
             }
         }
     }
+    public static void JoinGame(ZeroMQ.Giera game, string adres = "localhost", int port = 5555)
+    {
+        using (var requester = new RequestSocket())
+        {
+            requester.Connect("tcp://"+adres+":"+port.ToString());
+            game.You = 'O';
+            game.Opponent = 'X';
+            //ten sam wątek do gry
+        }
+    }
+
+
 }
