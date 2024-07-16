@@ -6,23 +6,25 @@ static class Program
 {
     public static void Main()
     {
-        Giera game = new Giera();
+        //Giera game = new Giera();
         Console.WriteLine("Connecting to hello world server…");
         using (var requester = new RequestSocket())
         {
             requester.Connect("tcp://localhost:5555");
-
+            Random random = new Random(); //random.Next(100);
+            Tuple<int, int> dwójka;
             int requestNumber;
             for (requestNumber = 0; requestNumber != 10; requestNumber++)
             {
+                dwójka = new Tuple<int, int>(random.Next(100), random.Next(100));
                 Console.WriteLine("Sending Hello {0}...", requestNumber);
-                requester.SendFrame("Hello");
+                requester.SendFrame(dwójka.ToString());
                 string str = requester.ReceiveFrameString();
-                Console.WriteLine("Received World {0}", requestNumber);
+                Console.WriteLine("Received World {0}. Suma: {1}", requestNumber, str);
             }
         }
     }
-    public static void JoinGame(ZeroMQ.Giera game, string adres = "localhost", int port = 5555)
+    /*public static void JoinGame(ZeroMQ.Giera game, string adres = "localhost", int port = 5555)
     {
         using (var requester = new RequestSocket())
         {
@@ -31,7 +33,7 @@ static class Program
             game.Opponent = 'X';
             //ten sam wątek do gry
         }
-    }
+    }*/
 
 
 }

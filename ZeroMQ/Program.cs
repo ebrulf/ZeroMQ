@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using System.Threading;
 using NetMQ;
 using NetMQ.Sockets;
@@ -14,12 +15,16 @@ static class Program
         using (var responder = new ResponseSocket())
         {
             responder.Bind("tcp://*:5555");
+            int a, b;
             while (true)
             {
                 string str = responder.ReceiveFrameString();
                 Console.WriteLine("Received Hello");
+                string pattern = @"[0-9]+";
+                MatchCollection znajdzki = Regex.Matches(str, pattern);
                 Thread.Sleep(1000);  //  Do some 'work'
-                responder.SendFrame("World");
+                Console.WriteLine("Otrzymano ({0}, {1})", a=Convert.ToInt32(znajdzki[0].Value), b=Convert.ToInt32(znajdzki[1].Value));
+                responder.SendFrame((a+b).ToString());
             }
         }
     }
