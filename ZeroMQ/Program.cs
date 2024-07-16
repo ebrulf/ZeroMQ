@@ -9,6 +9,8 @@ static class Program
 {
     public static void Main()
     {
+        Giera game = new Giera();
+        //HostGame
         using (var responder = new ResponseSocket())
         {
             responder.Bind("tcp://*:5555");

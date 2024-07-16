@@ -43,7 +43,7 @@ namespace ZeroMQ
         }
         public void HandleConnection(ResponseSocket klient)
         {
-            int move;
+            Tuple<int, int> move;
             while(!GameOver)
             {
                 if(Turn==You)
@@ -79,17 +79,113 @@ namespace ZeroMQ
             }
             // w razie czego się rozłącz
         }
-        public int PobierzRuch()
+        public Tuple<int, int> PobierzRuch()
         {
-            return 1;
+            return new Tuple<int,int>(1, 1);
         }
-        public bool CheckValidMove(int move)
+        public bool CheckValidMove(Tuple<int, int> move)
         {
-            return false
+            return Board[move.Item1, move.Item2] == ' ';
         }
-        public void ApplyMove(int move, char gracz)
+        public void ApplyMove(Tuple<int,int> move, char gracz)
         {
-
+            if (GameOver)
+                return;
+            Counter += 1;
+            Board[move.Item1, move.Item2] = gracz;
+            PrintBoard();
+            if(CheckForWin())
+            {
+                if (Winner == You)
+                    Console.WriteLine("Wygrana");//nadpiszemy nagłówek drugiego stopnia
+                else if (Winner == Opponent)
+                    Console.WriteLine("Przegrana");
+                //exit
+            }
+            else
+            {
+                if (Counter == Board.Length)
+                {
+                    Console.WriteLine("Remis");
+                    //exit
+                }
+                    
+            }
+        }
+        public void PrintBoard()
+        {
+            //update stan GUI
+        }
+        public bool CheckForWin()
+        {
+            //wiersze
+            char sprawdz;
+            bool check; //mogę też nieefektywnie, a zrozumiale sprawdzać
+            for (int i = 0; i < Board.GetLength(0); i++)
+            {
+                int j = 0;
+                sprawdz = Board[i, j];
+                if (sprawdz == ' ')
+                    continue;//ma sprawdzić następny wiersz
+                for (; j < Board.GetLength(1); j++)
+                {
+                    if (Board[i, j] != sprawdz)
+                        break; //ma przestać sprawdzać w wierszu
+                }
+                if (Board[i,j]==sprawdz)//to powinno zadziałać w ostatniej kolumnie
+                {
+                    Winner = sprawdz;
+                    GameOver = true;
+                    return true;
+                }
+            }
+            //kolumny
+            for(int j = 0; j<Board.GetLength(1); j++)
+            {
+                int i = 0;
+                sprawdz = Board[i, j];
+                if (sprawdz == ' ')
+                    continue;//ma sprawdzić następną kolumnę
+                for (; i < Board.GetLength(0); i++)
+                {
+                    if (Board[i, j] != sprawdz)
+                        break; //ma przestać sprawdzać w kolumnie
+                }
+                if (Board[i, j] == sprawdz)//sprawdzamy ostatni wiersz
+                {
+                    Winner = sprawdz;
+                    GameOver = true;
+                    return true;
+                }
+            }
+            //przekątne
+            sprawdz = Board[0, 0];
+            int inn;
+            for(inn=1; inn<Board.GetLength(0); inn++)
+            {
+                if (Board[inn, inn] != sprawdz)
+                    break;
+            }
+            if(inn==Board.GetLength(0) && Board[inn,inn]==sprawdz && sprawdz!=' ')
+            {
+                Winner = sprawdz;
+                GameOver = true;
+                return true;
+            }
+            //i teraz druga
+            sprawdz = Board[Board.GetLength(0) - 1, 0];
+            for(inn = 1; inn<Board.GetLength(0); inn++)
+            {
+                if (Board[Board.GetLength(0)-1-inn, inn] != sprawdz)
+                    break;
+            }
+            if (inn == Board.GetLength(0) && Board[Board.GetLength(0) - 1 - inn, inn] == sprawdz && sprawdz != ' ')
+            {
+                Winner = sprawdz;
+                GameOver = true;
+                return true;
+            }
+            return false;
         }
     }
 }

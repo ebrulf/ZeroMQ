@@ -6,6 +6,7 @@ static class Program
 {
     public static void Main()
     {
+        Giera game = new Giera();
         Console.WriteLine("Connecting to hello world server…");
         using (var requester = new RequestSocket())
         {

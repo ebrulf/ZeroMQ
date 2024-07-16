@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeroMQ", "ZeroMQ\ZeroMQ.csproj", "{6CD346F2-08DF-43EF-A966-8ADDC7E24AB1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Klient", "Klient\Klient.csproj", "{2FC03B00-5BB1-4252-9ACD-459C067B224C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6CD346F2-08DF-43EF-A966-8ADDC7E24AB1} = {6CD346F2-08DF-43EF-A966-8ADDC7E24AB1}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUI", "GUI\GUI.csproj", "{C98150EB-E739-4FE9-A922-9190F7952F77}"
 EndProject
