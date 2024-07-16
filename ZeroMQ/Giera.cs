@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NetMQ;
 using NetMQ.Sockets;
@@ -26,7 +27,7 @@ namespace ZeroMQ
             Turn = 'X';
             You = 'X';
             Opponent = 'O';
-            Winner = null;
+            Winner = null;// albo ' '
             GameOver = false;
             Counter = 0;
         }
@@ -51,9 +52,9 @@ namespace ZeroMQ
                     move = PobierzRuch();
                     if(CheckValidMove(move))
                     {
+                        klient.SendFrame(move.ToString());//wyślij klientowi ruch w postaci "(pierwszy, drugi)"
                         ApplyMove(move, You);
                         Turn = Opponent;
-                        klient.SendFrame(move.ToString());//wyślij klientowi ruch
                     }
                     else
                     {
@@ -64,14 +65,17 @@ namespace ZeroMQ
                 { 
 
                     string dane = klient.ReceiveFrameString(Encoding.UTF8);//góra 1024 bajty
-                    if(dane is null)
+                    string pattern = @"[0-9]+";
+                    MatchCollection znajdzki = Regex.Matches(dane, pattern);
+                    if (dane is null || znajdzki.Count != 2)
                     {
+                        Console.WriteLine("Czemu liczb jest " + znajdzki.Count);
                         //rozłącz się z klientem
-                        break;
+                        break; //tu też powinien być exception
                     }
                     else
-                    {
-                        move = Convert.ToInt32(dane);//plus jeszcze jakieś sztuczki
+                    {   
+                        move= new Tuple<int,int>(Convert.ToInt32(znajdzki[0].Value), Convert.ToInt32(znajdzki[1].Value));//plus jeszcze jakieś sztuczki typu regex [0-9]+
                         ApplyMove(move, Opponent);
                         Turn = You;
                     }
@@ -120,7 +124,7 @@ namespace ZeroMQ
         {
             //wiersze
             char sprawdz;
-            bool check; //mogę też nieefektywnie, a zrozumiale sprawdzać
+            //bool check; //mogę też nieefektywnie, a zrozumiale sprawdzać
             for (int i = 0; i < Board.GetLength(0); i++)
             {
                 int j = 0;
