@@ -6,7 +6,7 @@
     <!-- też skopiowane z dev.to -->
     <ContentPage.Resources>
         <Style TargetType="Button">
-            <Setter Property="BackgroundColor" Value="LightGray" />
+            <Setter Property="BackgroundColor" Value="LightGray" /><!--- osobny styl dla klikniętych ma mieć ciemniejszy kolor-->
             <Setter Property="FontSize" Value="24" />
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />

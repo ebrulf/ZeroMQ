@@ -16,8 +16,9 @@ namespace GUI
         void OnClicked(object sender, EventArgs args)
         {
             Console.Beep(220,500);
-            //sender.IsEnabledProperty = false;
-            ((Button)sender).IsEnabled = false; //to rozkracza plus zamienienie sendera z obiektu na przycisk
+            Button s = (Button)sender;
+            s.IsEnabled = false; //to rozkracza plus zamienienie sendera z obiektu na przycisk
+            //rzutowanie załatwiło sprawę
         }
     }
     
