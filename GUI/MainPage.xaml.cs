@@ -16,9 +16,16 @@ namespace GUI
         void OnClicked(object sender, EventArgs args)
         {
             Console.Beep(220,500);
-            Button s = (Button)sender;
+            Wyłącz((Button)sender);
+            
+        }
+        void Wyłącz(Button s)
+        {
             s.IsEnabled = false; //to rozkracza plus zamienienie sendera z obiektu na przycisk
             //rzutowanie załatwiło sprawę
+            s.BackgroundColor = new Color(64, 64, 64);//kolor wyłączonego przycisku
+            s.TextColor = new Color(200, 200, 200);//kolor tekstu ma się nie zmieniać
+            //dla porządku, niekliknięty tekst na razie ma biały kolor
         }
     }
     
