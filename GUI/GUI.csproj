@@ -90,6 +90,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\ZeroMQ\ZeroMQ.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="OApce.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
