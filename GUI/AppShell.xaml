@@ -16,6 +16,10 @@
             Title="O apce"
             ContentTemplate="{DataTemplate local:OApce}"
             Icon="{OnPlatform 'icon_about.png', iOS='icon_about_ios.png', MacCatalyst='icon_about_ios.png'}" />
+        <ShellContent
+    Title="Połącz"
+    ContentTemplate="{DataTemplate local:Connect}"
+    Icon="{OnPlatform 'icon_about.png', iOS='icon_about_ios.png', MacCatalyst='icon_about_ios.png'}" />
     </TabBar>
     <ShellContent
         Title="Strona domowa"

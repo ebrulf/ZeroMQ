@@ -94,6 +94,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Connect.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="OApce.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
