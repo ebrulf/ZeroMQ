@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GUI.OApce"
-             Title="O apce">
+             Title="Ustawienia i info">
     <VerticalStackLayout Spacing="10" Margin="10">
         <HorizontalStackLayout Spacing="10">
             <Image Source="tic_tac_toe.png"
@@ -11,8 +11,24 @@
             <Label FontSize="22" FontAttributes="Bold" Text="Kółko i krzyżyk" VerticalOptions="End" />
             <Label FontSize="22" Text="v0.0.2" VerticalOptions="End" />
         </HorizontalStackLayout>
+        <VerticalStackLayout RadioButtonGroup.GroupName="wybor" RadioButtonGroup.SelectedValue="{Binding Selection}">
+            <Label 
+    Text="Połącz z serwerem"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" 
+    Style="{StaticResource SubHeadline}"/>
+            <RadioButton x:Name="Lokal" Value="Lokal" Content="Lokalny multiplayer" CheckedChanged="OnColorsRadioButtonCheckedChanged"/>
+            <RadioButton x:Name="Serwer" Value="Serwer" Content="Adres serwera" CheckedChanged="OnColorsRadioButtonCheckedChanged">
+            </RadioButton>
+            <Entry x:Name="IP" Placeholder="Wpisz adres serwera gry" 
+       IsTextPredictionEnabled="false" IsSpellCheckEnabled="false" 
+       Keyboard="Url" ClearButtonVisibility="WhileEditing"
+         IsEnabled="False" />
+            <!-- ReturnType="Send"  Completed="OnEntryCompleted" -->
+            <Label x:Name="Status" Text="Nie połączono z serwerem"/>
+        </VerticalStackLayout>
 
         <Label Text="Niniejsza aplikacja została napisana w XAML i C# poprzez .NET MAUI." />
-        <Button Text="Dowiedz się więcej..." Clicked="LearnMore_Clicked" />
+        <Button Text="Uruchom grę" Clicked="LearnMore_Clicked" />
     </VerticalStackLayout>
 </ContentPage>

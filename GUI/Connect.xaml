@@ -7,7 +7,8 @@
         <Label 
             Text="Połącz z serwerem"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" 
+            Style="{StaticResource SubHeadline}"/>
         <RadioButton Value="Lokalny multiplayer"/>
         <RadioButton Value="Adres serwera" />
     </VerticalStackLayout>
