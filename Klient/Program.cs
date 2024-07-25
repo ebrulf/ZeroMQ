@@ -1,8 +1,9 @@
 ﻿using System;
 using NetMQ;
 using NetMQ.Sockets;
+using ZeroMQ;
 // trzeba zainstalować osobno do każdego rozwiązania
-static class Program
+public static class Programik
 {
     public static void Main()
     {
@@ -24,7 +25,7 @@ static class Program
             }
         }
     }
-    /*public static void JoinGame(ZeroMQ.Giera game, string adres = "localhost", int port = 5555)
+    public static void JoinGame(Giera game, string adres = "localhost", int port = 5555)
     {
         using (var requester = new RequestSocket())
         {
@@ -33,7 +34,7 @@ static class Program
             game.Opponent = 'X';
             //ten sam wątek do gry
         }
-    }*/
+    }
 
 
 }

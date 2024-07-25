@@ -6,7 +6,7 @@ using NetMQ;
 using NetMQ.Sockets;
 using ZeroMQ;
 
-static class Program
+public static class Programm
 {
     public static void Main()
     {
