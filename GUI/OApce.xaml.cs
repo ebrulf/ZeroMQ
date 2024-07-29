@@ -26,6 +26,7 @@ public partial class OApce : ContentPage
         //((RadioButton)sender) //ma wyboldowaæ tekst, ale to da siê zrobiæ w xaml
         Console.Beep(440, 500);
         DisplayAlert("info", IP.Text, " Ok");//to nie dzia³a itd.
+        GUI.MainPage.gra = new ZeroMQ.Giera();
         Programik.JoinGame(new ZeroMQ.Giera(), IP.Text);
     }
     void Add(object sender, CheckedChangedEventArgs e)

@@ -6,7 +6,7 @@ namespace GUI
 {
     public partial class MainPage : ContentPage
     {
-        //int count = 0;
+        public ZeroMQ.Giera gra; //to chyba najlepsze miejsce, wróć, gdzie jest instancja?
         public MainPage()
         {
             InitializeComponent();

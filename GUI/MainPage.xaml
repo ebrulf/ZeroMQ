@@ -13,6 +13,7 @@
             <Setter Property="VerticalOptions" Value="FillAndExpand" />
             <Setter Property="Margin" Value="2" />
         </Style>
+        
     </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout
