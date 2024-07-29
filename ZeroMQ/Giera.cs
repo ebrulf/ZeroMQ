@@ -27,7 +27,7 @@ namespace ZeroMQ
             Board = Inicjalizuj(Board, ' ');
             Turn = 'X';
             losuj = new Random();
-            You = losuj.Next(2)==0? 'X': 'O'; //w ten sposób serwer nie będzie zawsze zaczynał
+            You = 'X';//losuj.Next(2)==0? 'X': 'O'; //w ten sposób serwer nie będzie zawsze zaczynał
             Opponent = 'O';
             Winner = null;// albo ' '
             GameOver = false;
@@ -49,6 +49,7 @@ namespace ZeroMQ
             Tuple<int, int> move;
             while(!GameOver)
             {
+                Console.WriteLine("Ruch wykonuje gracz: " + Turn);//dla porządku
                 if(Turn==You)
                 {
                     move = PobierzRuch();
@@ -87,7 +88,17 @@ namespace ZeroMQ
         }
         public Tuple<int, int> PobierzRuch()
         {
-            return new Tuple<int,int>(1, 1);
+            Console.Write("Wybierz miejsce na planszy (wiersz ↓, kolumna →; numeracja od zera): \nWiersz: ");
+            string a = Console.ReadLine(); //nie będzie ReadKey().KeyChar
+            Console.Write("Kolumna: ");
+            string b = Console.ReadLine();
+            string pattern = @"[0-9]+"; //wykrywacz liczb, nie tylko cyfr
+            MatchCollection znajdzki = Regex.Matches(a, pattern);
+            MatchCollection znajdzka = Regex.Matches(b, pattern);
+            //trzeba to obudować i zabezpieczyć, żeby to były liczby i żeby się mieściły na tablicy
+            int aa = Convert.ToInt32(znajdzki[0].Value);
+            int bb = Convert.ToInt32(znajdzka[0].Value);
+            return new Tuple<int, int>(aa, bb);
         }
         public bool CheckValidMove(Tuple<int, int> move)
         {
@@ -106,6 +117,7 @@ namespace ZeroMQ
                     Console.WriteLine("Wygrana");//nadpiszemy nagłówek drugiego stopnia
                 else if (Winner == Opponent)
                     Console.WriteLine("Przegrana");
+                GameOver = true;
                 //exit
             }
             else
@@ -113,12 +125,13 @@ namespace ZeroMQ
                 if (Counter == Board.Length)
                 {
                     Console.WriteLine("Remis");
+                    GameOver = true;
                     //exit
                 }
                     
             }
         }
-        public void PrintBoard() //działa
+        public void PrintBoard() //działa jak marzenie
         {
             //update stan GUI
             for (int i=0; i<Board.GetLength(0); i++)
@@ -131,9 +144,9 @@ namespace ZeroMQ
                 }
                 Console.Write('\n');
                 if (i != Board.GetLength(0) - 1)
-                    for(int k=0; k<2*Board.GetLength(1)-1; k++)
-                        Console.Write('-'); //tylko nie pod ostatnią liinjką
-                Console.Write('\n');
+                    for(int k=0; k<Board.GetLength(1)-1; k++)
+                        Console.Write("-+"); //tylko nie pod ostatnią liinjką
+                Console.Write("\n");
             }
         }
         public bool CheckForWin()
@@ -147,7 +160,7 @@ namespace ZeroMQ
                 sprawdz = Board[i, j];
                 if (sprawdz == ' ')
                     continue;//ma sprawdzić następny wiersz
-                for (; j < Board.GetLength(1); j++)
+                for (; j < Board.GetLength(1)-1; j++)
                 {
                     if (Board[i, j] != sprawdz)
                         break; //ma przestać sprawdzać w wierszu
@@ -166,7 +179,7 @@ namespace ZeroMQ
                 sprawdz = Board[i, j];
                 if (sprawdz == ' ')
                     continue;//ma sprawdzić następną kolumnę
-                for (; i < Board.GetLength(0); i++)
+                for (; i < Board.GetLength(0) - 1; i++)
                 {
                     if (Board[i, j] != sprawdz)
                         break; //ma przestać sprawdzać w kolumnie
@@ -186,20 +199,20 @@ namespace ZeroMQ
                 if (Board[inn, inn] != sprawdz)
                     break;
             }
-            if(inn==Board.GetLength(0) && Board[inn,inn]==sprawdz && sprawdz!=' ')
+            if(inn==Board.GetLength(0)-1 && Board[inn,inn]==sprawdz && sprawdz!=' ')
             {
                 Winner = sprawdz;
                 GameOver = true;
                 return true;
             }
             //i teraz druga
-            sprawdz = Board[Board.GetLength(0) - 1, 0];
-            for(inn = 1; inn<Board.GetLength(0); inn++)
+            sprawdz = Board[Board.GetLength(0) - 1, 0]; //to pokręcone
+            for(inn = 1; inn<Board.GetLength(0)-1; inn++)
             {
-                if (Board[Board.GetLength(0)-1-inn, inn] != sprawdz)
+                if (Board[Board.GetLength(0)-2-inn, inn] != sprawdz)//powinno być lepiej
                     break;
             }
-            if (inn == Board.GetLength(0) && Board[Board.GetLength(0) - 1 - inn, inn] == sprawdz && sprawdz != ' ')
+            if (inn == Board.GetLength(0) && Board[Board.GetLength(0) - 1 - inn, inn] == sprawdz && sprawdz != ' ') // drugi warunek pokręcony
             {
                 Winner = sprawdz;
                 GameOver = true;

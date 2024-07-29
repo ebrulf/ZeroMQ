@@ -24,7 +24,7 @@ public static class Programm
         using (var responder = new ResponseSocket())
         {
             responder.Bind("tcp://*:5555");
-            int a, b;
+            int a, b, licznik = 0;
             while (true)
             {
                 string str = responder.ReceiveFrameString();
@@ -34,6 +34,8 @@ public static class Programm
                 Thread.Sleep(1000);  //  Do some 'work'
                 Console.WriteLine("Otrzymano ({0}, {1})", a=Convert.ToInt32(znajdzki[0].Value), b=Convert.ToInt32(znajdzki[1].Value));
                 responder.SendFrame((a+b).ToString());
+                game.ApplyMove(new Tuple<int, int>(a, b), licznik++%2==0?'T':'N');
+                game.PrintBoard();
             }
         }
     }
