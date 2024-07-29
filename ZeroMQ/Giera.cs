@@ -74,6 +74,7 @@ namespace ZeroMQ
                     {
                         Console.WriteLine("Czemu liczb jest " + znajdzki.Count);
                         //rozłącz się z klientem
+                        klient.Close(); //na razie to powinno wystarczyć
                         break; //tu też powinien być exception
                     }
                     else
@@ -85,6 +86,7 @@ namespace ZeroMQ
                 }
             }
             // w razie czego się rozłącz
+            klient.Close();
         }
         public Tuple<int, int> PobierzRuch()
         {

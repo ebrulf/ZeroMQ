@@ -20,6 +20,7 @@ public static class Programm
         //dalej oczyszczamy regexami wejścia, krzyczymy, jeśli są nieprawidłowe
         //HostGame(game, add, por);
         game.PrintBoard();
+        HostGame(game);
         //zróbmy jednorazowo, bez rewanżu
         using (var responder = new ResponseSocket())
         {
@@ -34,8 +35,9 @@ public static class Programm
                 Thread.Sleep(1000);  //  Do some 'work'
                 Console.WriteLine("Otrzymano ({0}, {1})", a=Convert.ToInt32(znajdzki[0].Value), b=Convert.ToInt32(znajdzki[1].Value));
                 responder.SendFrame((a+b).ToString());
-                game.ApplyMove(new Tuple<int, int>(a, b), licznik++%2==0?'T':'N');
-                game.PrintBoard();
+                //game.ApplyMove(new Tuple<int, int>(a, b), licznik++%2==0?'T':'N');
+
+               // game.PrintBoard();
             }
         }
     }
@@ -46,11 +48,12 @@ public static class Programm
         using (var responder = new ResponseSocket())
         {
             responder.Bind("tcp://"+adres+":"+port.ToString());
-            Thread.Sleep(1000);
+            Thread.Sleep(1000);//słuchać
             List<string> klient = responder.ReceiveMultipartStrings();//a nie Frame?, adres też pobieramy
-            //game.You = 'X';
-            //game.Opponent = 'O';
+            game.You = 'X';
+            game.Opponent = 'O';
             //tu zaczynamy grę z klientem, funkcja handle_connection
+            Console.WriteLine(klient);
             game.HandleConnection(responder);
             responder.Unbind("tcp://" + adres + ":" + port.ToString());
         }

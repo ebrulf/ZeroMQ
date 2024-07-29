@@ -9,7 +9,8 @@ public static class Programik
     {
         Giera game = new Giera();
         Console.WriteLine("Connecting to hello world server…");
-        using (var requester = new RequestSocket())
+        JoinGame(game);
+        /*using (var requester = new RequestSocket())
         {
             requester.Connect("tcp://localhost:5555");
             Random random = new Random(); //random.Next(100);
@@ -17,25 +18,31 @@ public static class Programik
             int requestNumber;
             for (requestNumber = 0; requestNumber != 10; requestNumber++)
             {
-                dwójka = game.PobierzRuch(); //działa, kiedy działa
-                    //new Tuple<int, int>(random.Next(100), random.Next(100));
+                //dwójka = game.PobierzRuch(); //działa, kiedy działa
+                dwójka = new Tuple<int, int>(random.Next(100), random.Next(100));
                 Console.WriteLine("Sending Hello {0}...", requestNumber);
                 requester.SendFrame(dwójka.ToString());
-                game.ApplyMove(dwójka, requestNumber%2==0?'X':'O');
+                //game.ApplyMove(dwójka, requestNumber%2==0?'X':'O');
                 string str = requester.ReceiveFrameString();
                 Console.WriteLine("Received World {0}. Suma: {1}", requestNumber, str);
-                game.PrintBoard();
+                //game.PrintBoard();
             }
-        }
+        }*/
     }
     public static void JoinGame(Giera game, string adres = "localhost", int port = 5555)
     {
         using (var requester = new RequestSocket())
         {
             requester.Connect("tcp://"+adres+":"+port.ToString());
-            //game.You = 'O';
-            //game.Opponent = 'X';
+            game.You = 'O';
+            game.Opponent = 'X';
             //ten sam wątek do gry
+            //game.HandleConnection(requester);//widzę problem, jak to związać w jeden wątek
+            while(!game.GameOver)
+            {
+                
+            }
+            requester.Close();
         }
     }
 
