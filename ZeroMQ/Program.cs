@@ -13,12 +13,13 @@ public static class Programm
         //PairSocket pairSocket = new PairSocket();//może?
         Giera game = new Giera();
         //HostGame
-        Console.Write("Podaj adres IPv4 drugiego gracza (domyślnie: *): ");
+        Console.Write("Podaj adres IPv4 drugiego gracza (domyślnie: *): \n");
         //string add = Console.ReadLine(); //krzyczy o nullach, słusznie
-        Console.Write("Podaj port połączenia TCP (domyślnie: 5555): ");
+        Console.Write("Podaj port połączenia TCP (domyślnie: 5555): \n");
         //string por = Console.ReadLine();
         //dalej oczyszczamy regexami wejścia, krzyczymy, jeśli są nieprawidłowe
-        //HostGame
+        //HostGame(game, add, por);
+        game.PrintBoard();
         //zróbmy jednorazowo, bez rewanżu
         using (var responder = new ResponseSocket())
         {

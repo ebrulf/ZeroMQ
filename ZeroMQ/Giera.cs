@@ -118,21 +118,22 @@ namespace ZeroMQ
                     
             }
         }
-        public void PrintBoard()
+        public void PrintBoard() //działa
         {
             //update stan GUI
-            Console.Write(Board[0, 0]);
             for (int i=0; i<Board.GetLength(0); i++)
             {
                 for(int j=0; j<Board.GetLength(1); j++)
                 {
-                    if (i != 0)
+                    if (j != 0)
                         Console.Write('|');//tylko z lewej strony daje
                     Console.Write(Board[i, j]);
                 }
+                Console.Write('\n');
                 if (i != Board.GetLength(0) - 1)
                     for(int k=0; k<2*Board.GetLength(1)-1; k++)
-                        Console.WriteLine('-'); //tylko nie pod ostatnią liinjką
+                        Console.Write('-'); //tylko nie pod ostatnią liinjką
+                Console.Write('\n');
             }
         }
         public bool CheckForWin()
