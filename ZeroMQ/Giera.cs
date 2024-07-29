@@ -18,6 +18,7 @@ namespace ZeroMQ
         public char? Winner;
         public bool GameOver;
         public int Counter;
+        private Random losuj;
         public Giera(int n=3) 
         {
             if (n <= 2)
@@ -25,7 +26,8 @@ namespace ZeroMQ
             Board = new char[n,n];
             Board = Inicjalizuj(Board, ' ');
             Turn = 'X';
-            You = 'X';
+            losuj = new Random();
+            You = losuj.Next(2)==0? 'X': 'O'; //w ten sposób serwer nie będzie zawsze zaczynał
             Opponent = 'O';
             Winner = null;// albo ' '
             GameOver = false;
@@ -119,7 +121,19 @@ namespace ZeroMQ
         public void PrintBoard()
         {
             //update stan GUI
-
+            Console.Write(Board[0, 0]);
+            for (int i=0; i<Board.GetLength(0); i++)
+            {
+                for(int j=0; j<Board.GetLength(1); j++)
+                {
+                    if (i != 0)
+                        Console.Write('|');//tylko z lewej strony daje
+                    Console.Write(Board[i, j]);
+                }
+                if (i != Board.GetLength(0) - 1)
+                    for(int k=0; k<2*Board.GetLength(1)-1; k++)
+                        Console.WriteLine('-'); //tylko nie pod ostatnią liinjką
+            }
         }
         public bool CheckForWin()
         {

@@ -10,8 +10,16 @@ public static class Programm
 {
     public static void Main()
     {
+        //PairSocket pairSocket = new PairSocket();//może?
         Giera game = new Giera();
         //HostGame
+        Console.Write("Podaj adres IPv4 drugiego gracza (domyślnie: *): ");
+        //string add = Console.ReadLine(); //krzyczy o nullach, słusznie
+        Console.Write("Podaj port połączenia TCP (domyślnie: 5555): ");
+        //string por = Console.ReadLine();
+        //dalej oczyszczamy regexami wejścia, krzyczymy, jeśli są nieprawidłowe
+        //HostGame
+        //zróbmy jednorazowo, bez rewanżu
         using (var responder = new ResponseSocket())
         {
             responder.Bind("tcp://*:5555");
@@ -37,9 +45,10 @@ public static class Programm
             responder.Bind("tcp://"+adres+":"+port.ToString());
             Thread.Sleep(1000);
             List<string> klient = responder.ReceiveMultipartStrings();//a nie Frame?, adres też pobieramy
-            game.You = 'X';
-            game.Opponent = 'O';
+            //game.You = 'X';
+            //game.Opponent = 'O';
             //tu zaczynamy grę z klientem, funkcja handle_connection
+            game.HandleConnection(responder);
             responder.Unbind("tcp://" + adres + ":" + port.ToString());
         }
     }

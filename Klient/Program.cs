@@ -30,8 +30,8 @@ public static class Programik
         using (var requester = new RequestSocket())
         {
             requester.Connect("tcp://"+adres+":"+port.ToString());
-            game.You = 'O';
-            game.Opponent = 'X';
+            //game.You = 'O';
+            //game.Opponent = 'X';
             //ten sam wątek do gry
         }
     }
