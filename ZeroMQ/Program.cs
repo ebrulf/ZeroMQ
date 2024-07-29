@@ -56,6 +56,7 @@ public static class Programm
             Console.WriteLine(klient);
             game.HandleConnection(responder);
             responder.Unbind("tcp://" + adres + ":" + port.ToString());
+            Console.WriteLine("Bajbaj");
         }
     }
 }

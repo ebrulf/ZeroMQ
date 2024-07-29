@@ -43,6 +43,7 @@ public static class Programik
                 
             }
             requester.Close();
+            Console.WriteLine("Papatki");
         }
     }
 

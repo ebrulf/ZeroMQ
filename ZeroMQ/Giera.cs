@@ -86,7 +86,7 @@ namespace ZeroMQ
                 }
             }
             // w razie czego się rozłącz
-            klient.Close();
+            klient.Close(); //czy to działa jako
         }
         public Tuple<int, int> PobierzRuch()
         {
