@@ -24,7 +24,7 @@ public static class Programm
         game.PrintBoard();
         HostGame(game);
         //zróbmy jednorazowo, bez rewanżu
-        using (var responder = new ResponseSocket())
+        /*using (var responder = new ResponseSocket())
         {
             responder.Bind("tcp://*:5555");
             int a, b, licznik = 0;
@@ -41,6 +41,16 @@ public static class Programm
 
                // game.PrintBoard();
             }
+        }*/
+        /*DrugaPrzekątnaTest(3);
+        DrugaPrzekątnaTest(5);*/
+    }
+    public static void DrugaPrzekątnaTest(int dlugosc)
+    {
+        Console.WriteLine("Liczymy przekątne dla {0}:", dlugosc);
+        for (int inn = 0; inn < dlugosc ; inn++)
+        {
+            Console.WriteLine("{0} {1}", dlugosc - 1 - inn, inn);//powinno być lepiej
         }
     }
     //teraz za NeuralNine. Nie potrzeba do tego wątków
@@ -50,22 +60,28 @@ public static class Programm
         using (var responder = new ResponseSocket())
         {
             responder.Bind("tcp://"+adres+":"+port.ToString());
-            Thread.Sleep(1000);//słuchać
-            List<string> klient = responder.ReceiveMultipartStrings();//a nie Frame?, adres też pobieramy
+            //Thread.Sleep(1000);//słuchać
+            //List<string> klient = responder.ReceiveMultipartStrings();//a nie Frame?, adres też pobieramy//ah, they were both bottoms
             game.You = 'X';
             game.Opponent = 'O';
             Tuple<int, int> move;
             //tu zaczynamy grę z klientem, funkcja handle_connection
-            Console.WriteLine(klient);
-            game.HandleConnection(responder);
-            while(!game.GameOver)
+            //Console.WriteLine(klient);
+            //game.HandleConnection(responder);
+            string d = responder.ReceiveFrameString();//once again
+            if (d[0] != game.You && d[0] != game.Opponent)
+                Console.WriteLine("Co znowu?");
+            game.Turn = d[0];
+            while(!game.GameOver && !responder.IsDisposed)
             {
                 
                     Console.WriteLine("Ruch wykonuje gracz: " + game.Turn);//dla porządku
                     if (game.Turn == game.You)
                     {
+                    Thread.BeginCriticalRegion();
                         move = game.PobierzRuch();
-                        if (game.CheckValidMove(move))
+                    Thread.EndCriticalRegion();
+                        if (game.CheckValidMove(move))//działa
                         {
                             (responder).SendFrame(move.ToString());//wyślij klientowi ruch w postaci "(pierwszy, drugi)"
                             game.ApplyMove(move, game.You);
@@ -75,11 +91,12 @@ public static class Programm
                         {
                             Console.WriteLine("Niedozwolony ruch"); //to nie ma nawet być monit
                         }
+                        //responder.R
                     }
                     else
                     {
-
-                        string dane = (responder).ReceiveFrameString(Encoding.UTF8);//góra 1024 bajty//wywaliło przez zmianę z ResponderSocket
+                    Thread.Sleep(1000);
+                        string dane = (responder).ReceiveFrameString(Encoding.UTF8);//góra 1024 bajty
                         string pattern = @"[0-9]+";
                         MatchCollection znajdzki = Regex.Matches(dane, pattern);
                         if (dane is null || znajdzki.Count != 2)
@@ -98,9 +115,9 @@ public static class Programm
                     }
                 
                 // w razie czego się rozłącz
-                responder.Close(); //czy to działa jako
+                //responder.Close(); //czy to działa jako//a!
             }
-            responder.Unbind("tcp://" + adres + ":" + port.ToString());
+            //responder.Unbind("tcp://" + adres + ":" + port.ToString());//czemu responder is disposed?
             Console.WriteLine("Bajbaj");
         }
     }

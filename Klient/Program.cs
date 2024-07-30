@@ -13,7 +13,7 @@ public static class Programik
         Giera game = new Giera();
         Console.WriteLine("Łączenie z drugim graczem…");
         JoinGame(game);
-        using (var requester = new RequestSocket())
+        /*using (var requester = new RequestSocket())
         {
             requester.Connect("tcp://localhost:5555");
             Random random = new Random(); //random.Next(100);
@@ -31,7 +31,7 @@ public static class Programik
                 Console.WriteLine("Received World {0}. Suma: {1}", requestNumber, str);
                 //game.PrintBoard();
             }
-        }
+        }*/
         
     }
 
@@ -43,16 +43,22 @@ public static class Programik
             game.You = 'O';
             game.Opponent = 'X';
             Tuple<int, int> move;
+            Random random = new Random();
+            game.Turn = 'X';
+            //game.Turn = random.Next(2) == 0 ? 'X' : 'O';
+            requester.SendFrame(game.Turn.ToString());
             //ten sam wątek do gry
-            game.HandleConnection(requester);//widzę problem, jak to związać w jeden wątek
-            while (!game.GameOver)
+            //game.HandleConnection(requester);//widzę problem, jak to związać w jeden wątek
+            while (!game.GameOver && !requester.IsDisposed)
             {
-                
                     Console.WriteLine("Ruch wykonuje gracz: " + game.Turn);//dla porządku
                     if (game.Turn == game.You)
                     {
-                        move = game.PobierzRuch();
-                        if (game.CheckValidMove(move))
+
+                    Thread.BeginCriticalRegion(); 
+                    move = game.PobierzRuch();
+                    Thread.EndCriticalRegion();
+                    if (game.CheckValidMove(move))
                         {
                             (requester).SendFrame(move.ToString());//wyślij klientowi ruch w postaci "(pierwszy, drugi)"
                             game.ApplyMove(move, game.You);
@@ -62,10 +68,11 @@ public static class Programik
                         {
                             Console.WriteLine("Niedozwolony ruch"); //to nie ma nawet być monit
                         }
+                        //requester.Poll();
                     }
                     else
                     {
-
+                    Thread.Sleep(1000);
                         string dane = (requester).ReceiveFrameString(Encoding.UTF8);//góra 1024 bajty//wywaliło przez zmianę z ResponderSocket
                         string pattern = @"[0-9]+";
                         MatchCollection znajdzki = Regex.Matches(dane, pattern);
@@ -82,6 +89,7 @@ public static class Programik
                             game.ApplyMove(move, game.Opponent);
                             game.Turn = game.You;
                         }
+                    //requester.SignalOK(); //requester.Options.
                     }
             }
             requester.Close();

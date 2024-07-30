@@ -136,7 +136,7 @@ namespace ZeroMQ
             Counter += 1;
             Board[move.Item1, move.Item2] = gracz;
             PrintBoard();
-            if(CheckForWin())
+            if(CheckForWin())//czemu to nie działa?
             {
                 if (Winner == You)
                     Console.WriteLine("Wygrana");//nadpiszemy nagłówek drugiego stopnia
@@ -219,25 +219,26 @@ namespace ZeroMQ
             //przekątne
             sprawdz = Board[0, 0];
             int inn;
-            for(inn=1; inn<Board.GetLength(0); inn++)
+            int min = Board.GetLength(0) > Board.GetLength(1) ? Board.GetLength(1) : Board.GetLength(0);//uwzględniamy prostokąty
+            for(inn=1; inn<min; inn++)
             {
                 if (Board[inn, inn] != sprawdz)
                     break;
-            }
-            if(inn==Board.GetLength(0)-1 && Board[inn,inn]==sprawdz && sprawdz!=' ')
+            }//inn będzie równe 3 tudzież min
+            if(inn==min && Board[inn-1,inn-1]==sprawdz && sprawdz!=' ')
             {
                 Winner = sprawdz;
                 GameOver = true;
                 return true;
             }
             //i teraz druga
-            sprawdz = Board[Board.GetLength(0) - 1, 0]; //to pokręcone
-            for(inn = 1; inn<Board.GetLength(0)-1; inn++)
+            sprawdz = Board[min - 1, 0]; //to pokręcone
+            for(inn = 1; inn<min; inn++)
             {
-                if (Board[Board.GetLength(0)-2-inn, inn] != sprawdz)//powinno być lepiej
+                if (Board[min-1-inn, inn] != sprawdz)//powinno być lepiej
                     break;
             }
-            if (inn == Board.GetLength(0) && Board[Board.GetLength(0) - 1 - inn, inn] == sprawdz && sprawdz != ' ') // drugi warunek pokręcony
+            if (inn == min && Board[min - inn, inn-1] == sprawdz && sprawdz != ' ') // drugi warunek pokręcony
             {
                 Winner = sprawdz;
                 GameOver = true;
