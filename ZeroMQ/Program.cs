@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NetMQ;
@@ -52,13 +54,52 @@ public static class Programm
             List<string> klient = responder.ReceiveMultipartStrings();//a nie Frame?, adres też pobieramy
             game.You = 'X';
             game.Opponent = 'O';
+            Tuple<int, int> move;
             //tu zaczynamy grę z klientem, funkcja handle_connection
             Console.WriteLine(klient);
             game.HandleConnection(responder);
-            /*while(!game.GameOver)
+            while(!game.GameOver)
             {
+                
+                    Console.WriteLine("Ruch wykonuje gracz: " + game.Turn);//dla porządku
+                    if (game.Turn == game.You)
+                    {
+                        move = game.PobierzRuch();
+                        if (game.CheckValidMove(move))
+                        {
+                            (responder).SendFrame(move.ToString());//wyślij klientowi ruch w postaci "(pierwszy, drugi)"
+                            game.ApplyMove(move, game.You);
+                            game.Turn = game.Opponent;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Niedozwolony ruch"); //to nie ma nawet być monit
+                        }
+                    }
+                    else
+                    {
 
-            }*/
+                        string dane = (responder).ReceiveFrameString(Encoding.UTF8);//góra 1024 bajty//wywaliło przez zmianę z ResponderSocket
+                        string pattern = @"[0-9]+";
+                        MatchCollection znajdzki = Regex.Matches(dane, pattern);
+                        if (dane is null || znajdzki.Count != 2)
+                        {
+                            Console.WriteLine("Czemu liczb jest " + znajdzki.Count);
+                            //rozłącz się z klientem
+                            responder.Close(); //na razie to powinno wystarczyć
+                            break; //tu też powinien być exception
+                        }
+                        else
+                        {
+                            move = new Tuple<int, int>(Convert.ToInt32(znajdzki[0].Value), Convert.ToInt32(znajdzki[1].Value));//plus jeszcze jakieś sztuczki typu regex [0-9]+
+                            game.ApplyMove(move, game.Opponent);
+                            game.Turn = game.You;
+                        }
+                    }
+                
+                // w razie czego się rozłącz
+                responder.Close(); //czy to działa jako
+            }
             responder.Unbind("tcp://" + adres + ":" + port.ToString());
             Console.WriteLine("Bajbaj");
         }

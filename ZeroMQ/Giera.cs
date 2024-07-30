@@ -47,47 +47,51 @@ namespace ZeroMQ
         }
         public void HandleConnection(NetMQSocket klient)//czemu nie NetMQSocket, zamiast ResponderSocket?
         {
-            Tuple<int, int> move;
-            while(!GameOver)
+            using (klient)
             {
-                Console.WriteLine("Ruch wykonuje gracz: " + Turn);//dla porządku
-                if(Turn==You)
+                Tuple<int, int> move;
+                while (!GameOver)
                 {
-                    move = PobierzRuch();
-                    if(CheckValidMove(move))
+                    Console.WriteLine("Ruch wykonuje gracz: " + Turn);//dla porządku
+                    if (Turn == You)
                     {
-                        klient.SendFrame(move.ToString());//wyślij klientowi ruch w postaci "(pierwszy, drugi)"
-                        ApplyMove(move, You);
-                        Turn = Opponent;
+                        move = PobierzRuch();
+                        if (CheckValidMove(move))
+                        {
+                            (klient).SendFrame(move.ToString());//wyślij klientowi ruch w postaci "(pierwszy, drugi)"
+                            ApplyMove(move, You);
+                            Turn = Opponent;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Niedozwolony ruch"); //to nie ma nawet być monit
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Niedozwolony ruch"); //to nie ma nawet być monit
-                    }
-                }
-                else
-                { 
 
-                    string dane = klient.ReceiveFrameString(Encoding.UTF8);//góra 1024 bajty
-                    string pattern = @"[0-9]+";
-                    MatchCollection znajdzki = Regex.Matches(dane, pattern);
-                    if (dane is null || znajdzki.Count != 2)
-                    {
-                        Console.WriteLine("Czemu liczb jest " + znajdzki.Count);
-                        //rozłącz się z klientem
-                        klient.Close(); //na razie to powinno wystarczyć
-                        break; //tu też powinien być exception
-                    }
-                    else
-                    {   
-                        move= new Tuple<int,int>(Convert.ToInt32(znajdzki[0].Value), Convert.ToInt32(znajdzki[1].Value));//plus jeszcze jakieś sztuczki typu regex [0-9]+
-                        ApplyMove(move, Opponent);
-                        Turn = You;
+                        string dane = (klient).ReceiveFrameString(Encoding.UTF8);//góra 1024 bajty//wywaliło przez zmianę z ResponderSocket
+                        string pattern = @"[0-9]+";
+                        MatchCollection znajdzki = Regex.Matches(dane, pattern);
+                        if (dane is null || znajdzki.Count != 2)
+                        {
+                            Console.WriteLine("Czemu liczb jest " + znajdzki.Count);
+                            //rozłącz się z klientem
+                            klient.Close(); //na razie to powinno wystarczyć
+                            break; //tu też powinien być exception
+                        }
+                        else
+                        {
+                            move = new Tuple<int, int>(Convert.ToInt32(znajdzki[0].Value), Convert.ToInt32(znajdzki[1].Value));//plus jeszcze jakieś sztuczki typu regex [0-9]+
+                            ApplyMove(move, Opponent);
+                            Turn = You;
+                        }
                     }
                 }
+                // w razie czego się rozłącz
+                klient.Close(); //czy to działa jako
             }
-            // w razie czego się rozłącz
-            klient.Close(); //czy to działa jako
+            
         }
         public Tuple<int, int> Dwójka(string str)
         {
