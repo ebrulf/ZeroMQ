@@ -20,7 +20,7 @@ public static class Programm
         //dalej oczyszczamy regexami wejścia, krzyczymy, jeśli są nieprawidłowe
         //HostGame(game, add, por);
         game.PrintBoard();
-        HostGame(game);
+        //HostGame(game);
         //zróbmy jednorazowo, bez rewanżu
         using (var responder = new ResponseSocket())
         {

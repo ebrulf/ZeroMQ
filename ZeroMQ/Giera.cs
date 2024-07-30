@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NetMQ;
 using NetMQ.Sockets;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZeroMQ
 {
@@ -87,6 +88,24 @@ namespace ZeroMQ
             }
             // w razie czego się rozłącz
             klient.Close(); //czy to działa jako
+        }
+        public Tuple<int, int> Dwójka(string str)
+        {
+            try
+            {
+                string pattern = @"[0-9]+";
+                MatchCollection znajdzki = Regex.Matches(str, pattern);
+                if (str is null || znajdzki.Count != 2)
+                {
+                    throw new Exception("Czemu liczb jest " + znajdzki.Count); //tu też powinien być exception
+                }
+                return new Tuple<int, int>(Convert.ToInt32(znajdzki[0].Value), Convert.ToInt32(znajdzki[1].Value));
+            }
+            catch
+            {
+                
+            }
+            return new Tuple<int, int>(-1, -1);
         }
         public Tuple<int, int> PobierzRuch()
         {

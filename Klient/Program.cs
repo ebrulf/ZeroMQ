@@ -9,8 +9,8 @@ public static class Programik
     {
         Giera game = new Giera();
         Console.WriteLine("Connecting to hello world server…");
-        JoinGame(game);
-        /*using (var requester = new RequestSocket())
+        //JoinGame(game);
+        using (var requester = new RequestSocket())
         {
             requester.Connect("tcp://localhost:5555");
             Random random = new Random(); //random.Next(100);
@@ -27,7 +27,7 @@ public static class Programik
                 Console.WriteLine("Received World {0}. Suma: {1}", requestNumber, str);
                 //game.PrintBoard();
             }
-        }*/
+        }
     }
     public static void JoinGame(Giera game, string adres = "localhost", int port = 5555)
     {

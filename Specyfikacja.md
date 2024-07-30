@@ -61,4 +61,6 @@ Da się zmienić rozmiar okna.
 
 Nie jest planowana zmiana języka ani kolorów. Jasna kolorystyka. Nie planowana jest implementacja interfejsu według zaleceń CUA ani udogodnienia dla niepełnosprawnych.
 
+### Stan rzeczy na dzień 30 VII 2024
 
+Porzuciłem GUI na rzecz CLI. Używam sieci wyłącznie do synchronizacji ruchów między lokalnymi instancjami gry wśród klientów. Będą sobie je wysyłać nawzajem.
