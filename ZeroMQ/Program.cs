@@ -20,7 +20,7 @@ public static class Programm
         //dalej oczyszczamy regexami wejścia, krzyczymy, jeśli są nieprawidłowe
         //HostGame(game, add, por);
         game.PrintBoard();
-        //HostGame(game);
+        HostGame(game);
         //zróbmy jednorazowo, bez rewanżu
         using (var responder = new ResponseSocket())
         {
@@ -29,13 +29,13 @@ public static class Programm
             while (true)
             {
                 string str = responder.ReceiveFrameString();
-                Console.WriteLine("Received Hello");
+                Console.WriteLine("Otrzymano ruch.");
                 string pattern = @"[0-9]+";
                 MatchCollection znajdzki = Regex.Matches(str, pattern);
                 Thread.Sleep(1000);  //  Do some 'work'
                 Console.WriteLine("Otrzymano ({0}, {1})", a=Convert.ToInt32(znajdzki[0].Value), b=Convert.ToInt32(znajdzki[1].Value));
                 responder.SendFrame((a+b).ToString());
-                //game.ApplyMove(new Tuple<int, int>(a, b), licznik++%2==0?'T':'N');
+                game.ApplyMove(new Tuple<int, int>(a, b), licznik++%2==0?'T':'N');
 
                // game.PrintBoard();
             }
@@ -55,6 +55,10 @@ public static class Programm
             //tu zaczynamy grę z klientem, funkcja handle_connection
             Console.WriteLine(klient);
             game.HandleConnection(responder);
+            /*while(!game.GameOver)
+            {
+
+            }*/
             responder.Unbind("tcp://" + adres + ":" + port.ToString());
             Console.WriteLine("Bajbaj");
         }

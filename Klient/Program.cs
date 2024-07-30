@@ -8,27 +8,30 @@ public static class Programik
     public static void Main()
     {
         Giera game = new Giera();
-        Console.WriteLine("Connecting to hello world server…");
-        //JoinGame(game);
+        Console.WriteLine("Łączenie z drugim graczem…");
+        JoinGame(game);
         using (var requester = new RequestSocket())
         {
             requester.Connect("tcp://localhost:5555");
             Random random = new Random(); //random.Next(100);
             Tuple<int, int> dwójka;
             int requestNumber;
+            game.PrintBoard();
             for (requestNumber = 0; requestNumber != 10; requestNumber++)
             {
-                //dwójka = game.PobierzRuch(); //działa, kiedy działa
-                dwójka = new Tuple<int, int>(random.Next(100), random.Next(100));
+                dwójka = game.PobierzRuch(); //działa, kiedy działa
+                //dwójka = new Tuple<int, int>(random.Next(100), random.Next(100));
                 Console.WriteLine("Sending Hello {0}...", requestNumber);
                 requester.SendFrame(dwójka.ToString());
-                //game.ApplyMove(dwójka, requestNumber%2==0?'X':'O');
+                game.ApplyMove(dwójka, requestNumber%2==0?'X':'O');
                 string str = requester.ReceiveFrameString();
                 Console.WriteLine("Received World {0}. Suma: {1}", requestNumber, str);
                 //game.PrintBoard();
             }
         }
+        
     }
+
     public static void JoinGame(Giera game, string adres = "localhost", int port = 5555)
     {
         using (var requester = new RequestSocket())
@@ -36,12 +39,23 @@ public static class Programik
             requester.Connect("tcp://"+adres+":"+port.ToString());
             game.You = 'O';
             game.Opponent = 'X';
+            Tuple<int, int> dwójka;
             //ten sam wątek do gry
-            //game.HandleConnection(requester);//widzę problem, jak to związać w jeden wątek
-            while(!game.GameOver)
+            game.HandleConnection(requester);//widzę problem, jak to związać w jeden wątek
+            /*while (!game.GameOver)
             {
+                if(game.Turn == game.You)
+                {
+                    dwójka = game.PobierzRuch();
+                    requester.SendFrame(dwójka.ToString());
+                    game.ApplyMove(dwójka, game.Turn);
+                }
+                 //działa, kiedy działa
+                //dwójka = new Tuple<int, int>(random.Next(100), random.Next(100));
+                //Console.WriteLine("Sending Hello {0}...", requestNumber);
                 
-            }
+                string str = requester.ReceiveFrameString();
+            }*/
             requester.Close();
             Console.WriteLine("Papatki");
         }

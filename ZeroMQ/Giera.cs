@@ -45,7 +45,7 @@ namespace ZeroMQ
             }
             return table;
         }
-        public void HandleConnection(ResponseSocket klient)
+        public void HandleConnection(NetMQSocket klient)//czemu nie NetMQSocket, zamiast ResponderSocket?
         {
             Tuple<int, int> move;
             while(!GameOver)
