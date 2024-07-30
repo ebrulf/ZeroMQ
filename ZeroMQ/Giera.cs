@@ -111,18 +111,44 @@ namespace ZeroMQ
             }
             return new Tuple<int, int>(-1, -1);
         }
+        public int PobierzLiczbe(string what, string pattern)
+        {
+            string a;
+            int aa;
+            MatchCollection znajdzki;
+            while (true)
+            {
+                Console.Write(what);
+                a = Console.ReadLine(); //nie będzie ReadKey().KeyChar
+                if(a is null)
+                {
+                    Console.WriteLine("Wpisz liczbę.");//nadal narzeka, ale jest git
+                    continue;
+                }
+                znajdzki = Regex.Matches(a, pattern);
+                if (znajdzki.Count < 1)
+                {
+                    Console.WriteLine("Wpisz liczbę.");
+                    continue;
+                }
+                aa = Convert.ToInt32(znajdzki[0].Value);
+                if (aa < 0 || aa > Board.GetLength(0))
+                {
+                    Console.WriteLine("Wpisz mieszczącą się liczbę.");
+                    continue;
+                }
+                break;
+            }
+            return aa;
+        }
         public Tuple<int, int> PobierzRuch()
         {
-            Console.Write("Wybierz miejsce na planszy (wiersz ↓, kolumna →; numeracja od zera): \nWiersz: ");
-            string a = Console.ReadLine(); //nie będzie ReadKey().KeyChar
-            Console.Write("Kolumna: ");
-            string b = Console.ReadLine();
             string pattern = @"[0-9]+"; //wykrywacz liczb, nie tylko cyfr
-            MatchCollection znajdzki = Regex.Matches(a, pattern);
-            MatchCollection znajdzka = Regex.Matches(b, pattern);
+            int aa, bb;
+            Console.WriteLine("Wybierz miejsce na planszy (wiersz ↓, kolumna →; numeracja od zera): ");
+            aa = PobierzLiczbe("Wiersz: ", pattern);
             //trzeba to obudować i zabezpieczyć, żeby to były liczby i żeby się mieściły na tablicy
-            int aa = Convert.ToInt32(znajdzki[0].Value);
-            int bb = Convert.ToInt32(znajdzka[0].Value);
+            bb = PobierzLiczbe("Kolumna: ", pattern);
             return new Tuple<int, int>(aa, bb);
         }
         public bool CheckValidMove(Tuple<int, int> move)
